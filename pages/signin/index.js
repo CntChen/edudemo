@@ -2,22 +2,16 @@
  * by CntChen 2016.01.11
  */
 
-'use strict';
-
-var React = require('react-native');
-var Home = require('./home');
-var Register = require('./register');
-var Login = require('./login');
-
-var {
-  AppRegistry,
+import React, {
   Navigator,
   BackAndroid,
-} = React;
+} from 'react-native';
+import Home from './home';
+import Register from './register';
+import Login from './login';
 
-
-var _navigator;
-var ExitFlag = 0;
+let _navigator;
+let ExitFlag = 0;
 BackAndroid.addEventListener('hardwareBackPress', () => {
   if (_navigator && _navigator.getCurrentRoutes().length > 1) {
     _navigator.pop();
@@ -37,7 +31,6 @@ var initialRoute = {name: 'Login'};
 var RouteMapper = function(route, navigationOperations) {
   _navigator = navigationOperations;
 
-  console.log(route.name);
   switch(route.name){
     case 'Home':
       return (

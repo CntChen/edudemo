@@ -1,47 +1,48 @@
-'use strict';
-
-var React = require('react-native');
-
-var {
+import React, {
   AppRegistry,
+  Component,
   StyleSheet,
   View,
   ToolbarAndroid,
   TextInput,
   Text,
   TouchableOpacity,
-} = React;
+} from 'react-native';
 
-var _navigator;
+let _navigator;
 
-var ToolBar = React.createClass({
-  getInitialState: function(){
-    return {
+const loginUrl = 'http://192.168.56.1:3000/login';
+
+class ToolBar extends Component{
+  constructor(props){
+    super(props);
+    this.state =  {
       toolBar: {
-        iconSrc: '../../res/imgs/back.png',
-        title: '首页',
-      },
-    }
-  },
+        title: '登录',
+      }
+    };
+  }
 
-  render: function() {
+  render() {
     _navigator = this.props.navigator;
     return (
       <ToolbarAndroid
-        navIcon={require('../../res/imgs/back.png')}
+        navIcon={require('../../res/imgs/backward.png')}
+        onPress = {() => _navigator && _navigator.pop()}
         onIconClicked={() => _navigator && _navigator.pop()}
         style={styles.toolbar}
         titleColor='white'
         title={this.state.toolBar.title}
       >
-      </ToolbarAndroid>  
+      </ToolbarAndroid>
     );
   }
-});
+}
 
-var LoginView = React.createClass({
-  getInitialState: function(){
-    return {
+class LoginView extends Component{
+  constructor(props){
+    super(props);
+    this.state = {
       loginID: '',
       loginPW: '',
       phone: {
@@ -57,20 +58,39 @@ var LoginView = React.createClass({
         text: '登录',
       },
     }
-  },
+  }
 
-  _onPressButton: function(targetId){
+  _onPressButton(targetId){
     switch(targetId)
     {
       case 'Submit':
         console.log(this.state);
+        fetch(loginUrl, {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            loginID: this.state.loginID,
+            loginPW: this.state.loginPW,
+          })
+        })
+        .then((response) => response.text())
+        .then((responseText) => JSON.parse(responseText))
+        .then(function(responseJson){
+          console.log(responseJson)});
+          console.log('loginsuccess');
+        .catch((error) => {
+          console.warn(error);
+        });
         break;
       default:
         break;
     }
-  },
+  }
 
-  render: function() {
+  render() {
     _navigator = this.props.navigator;
 
     return (
@@ -82,7 +102,6 @@ var LoginView = React.createClass({
             keyboardType = {'numeric'}
             onChangeText={(text) => this.setState({loginID: text})}
             placeholder = {this.state.phone.placeholder}
-            value={this.state.text}
           />
         </View>
         <View style={styles.login_info}>
@@ -93,7 +112,6 @@ var LoginView = React.createClass({
             secureTextEntry = {true}
             onChangeText={(text) => this.setState({loginPW: text})}
             placeholder = {this.state.password.placeholder}
-            value={this.state.text}
           />
         </View>
         <View style={styles.login_info}>
@@ -107,15 +125,16 @@ var LoginView = React.createClass({
       </View>
     );
   }
-});
+}
 
-var MyComponent = React.createClass({
-  getInitialState: function(){
-    return {
-    }
-  },
+class MyComponent extends Component{
+  constructor(props) {
+    super(props);
+    this.state = {
+    };
+  }
 
-  render: function() {
+  render() {
     _navigator = this.props.navigator;
 
     return (
@@ -125,9 +144,9 @@ var MyComponent = React.createClass({
       </View>
     );
   }
-});
+}
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F5FCFF',
@@ -171,7 +190,7 @@ var styles = StyleSheet.create({
   },
 });
 
-var stylesVariables = {
+const stylesVariables = {
   active_opacity: 0.8,
 };
 
