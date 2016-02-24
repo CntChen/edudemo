@@ -5,6 +5,7 @@
 'use strict';
 
 var React = require('react-native');
+var Dimensions = require('Dimensions');
 
 var {
   AppRegistry,
@@ -33,26 +34,30 @@ var MyComponent = React.createClass({
   },
 
   _onPressButton: function(targetId){
-    _navigator && _navigator.push({name: targetId});
+    _navigator && _navigator.push({id: targetId});
   },
 
   render: function() {
     _navigator = this.props.navigator;
+    let {height, width} = Dimensions.get('window');
+
     return (
-      <View style={styles.container}>
+      <Image source={require('../../res/imgs/home.png')}
+        resizeMode={Image.resizeMode.conver}
+        style={[styles.container, {width:width}]}>
         <View style={styles.bottom}>
           <View style={styles.flex_row}>
             <TouchableOpacity onPress={() => this._onPressButton(this.state.register.id)} activeOpacity={stylesVariables.active_opacity} style={[styles.button, styles.btn_register]}>
               <Text style={styles.text}>{this.state.register.text}</Text>
             </TouchableOpacity>
-          </View> 
+          </View>
           <View style={[styles.flex_row,styles.flex_float_right]}>
             <TouchableOpacity onPress={() => this._onPressButton(this.state.login.id)} activeOpacity={stylesVariables.active_opacity} style={[styles.button, styles.btn_login]}>
               <Text style={styles.text}>{this.state.login.text}</Text>
             </TouchableOpacity>
           </View> 
         </View>
-      </View>
+      </Image>
     );
   }
 });
@@ -61,7 +66,6 @@ var styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'flex-end',
-    backgroundColor: '#00FFFF',
   },
   flex_row:{
     flex: 1,

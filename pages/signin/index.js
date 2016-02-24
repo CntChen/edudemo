@@ -27,31 +27,30 @@ BackAndroid.addEventListener('hardwareBackPress', () => {
   return true;
 });
 
-var initialRoute = {name: 'Login'};
+var initialRoute = {id: 'Home'};
 var RouteMapper = function(route, navigationOperations) {
   _navigator = navigationOperations;
 
-  switch(route.name){
-    case 'Home':
+    if(route.id === 'Home'){
       return (
           <Home navigator={navigationOperations} />
       );
-      break;
-    case 'Register':
+    }
+    else if(route.id === 'Register'){
       return (
           <Register navigator={navigationOperations} />
       );
-      break;
-    case 'Login':
+    }
+    else if(route.id === 'Login'){
       return (
           <Login navigator={navigationOperations} />
       );
-      break;
-    default:
+    }
+    else{
       return (
           <Home navigator={navigationOperations} />
       );
-  }
+    }
 };
 
 var MyComponent = React.createClass({

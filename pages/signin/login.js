@@ -3,6 +3,7 @@ import React, {
   Component,
   StyleSheet,
   View,
+  Image,
   ToolbarAndroid,
   TextInput,
   Text,
@@ -11,7 +12,7 @@ import React, {
 
 let _navigator;
 
-const loginUrl = 'http://192.168.56.1:3000/login';
+const loginUrl = 'http://192.168.137.1:3000/login';
 
 class ToolBar extends Component{
   constructor(props){
@@ -24,17 +25,22 @@ class ToolBar extends Component{
   }
 
   render() {
-    _navigator = this.props.navigator;
     return (
+      <View style={{flexDirection: 'row',height:40,}}>
+      <View style={{width:60}}>
+      <Image source={require('../../res/imgs/backward.png')} style={{width:40,height:40,}}/>
+      </View>
+      <View style={{flex:1}}>
       <ToolbarAndroid
-        navIcon={require('../../res/imgs/backward.png')}
-        onPress = {() => _navigator && _navigator.pop()}
-        onIconClicked={() => _navigator && _navigator.pop()}
-        style={styles.toolbar}
-        titleColor='white'
         title={this.state.toolBar.title}
+        titleColor='white'
+        onIconClicked={() => {console.log(_navigator); _navigator && _navigator.pop();}}
+        style={styles.toolbar}
+        contentInsetStart={12}
       >
       </ToolbarAndroid>
+      </View>
+      </View>
     );
   }
 }
@@ -79,8 +85,8 @@ class LoginView extends Component{
         .then((response) => response.text())
         .then((responseText) => JSON.parse(responseText))
         .then(function(responseJson){
-          console.log(responseJson)});
-          console.log('loginsuccess');
+          console.log(responseJson);
+          console.log('loginsuccess');})
         .catch((error) => {
           console.warn(error);
         });
@@ -91,8 +97,6 @@ class LoginView extends Component{
   }
 
   render() {
-    _navigator = this.props.navigator;
-
     return (
       <View style={styles.login_view}>
         <View style={styles.login_info}>
@@ -136,7 +140,7 @@ class MyComponent extends Component{
 
   render() {
     _navigator = this.props.navigator;
-
+    console.log(_navigator);
     return (
       <View style={styles.container}>
         <ToolBar />

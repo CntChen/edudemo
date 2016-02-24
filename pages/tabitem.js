@@ -18,7 +18,7 @@ var TabItem = React.createClass({
       </View>
     );
   }
-}); 
+});
 
 var styles = StyleSheet.create({
   container: {
