@@ -4,6 +4,7 @@
 
 import React, {
   Navigator,
+  Component,
   BackAndroid,
 } from 'react-native';
 import Home from './home';
@@ -27,34 +28,40 @@ BackAndroid.addEventListener('hardwareBackPress', () => {
   return true;
 });
 
-var initialRoute = {id: 'Home'};
+var initialRoute = {id: 'Login'};
 var RouteMapper = function(route, navigationOperations) {
   _navigator = navigationOperations;
 
     if(route.id === 'Home'){
       return (
-          <Home navigator={navigationOperations} />
+        <Home navigator={navigationOperations} />
       );
     }
     else if(route.id === 'Register'){
       return (
-          <Register navigator={navigationOperations} />
+        <Register navigator={navigationOperations} />
       );
     }
     else if(route.id === 'Login'){
       return (
-          <Login navigator={navigationOperations} />
+        <Login navigator={navigationOperations} />
       );
     }
     else{
       return (
-          <Home navigator={navigationOperations} />
+        <Home navigator={navigationOperations} />
       );
     }
 };
 
-var MyComponent = React.createClass({
-  render: function() {
+
+class MyComponent extends Component{
+  constructor(props){
+    super(props);
+    this.state = {};
+  }
+
+  render(){
     return (
       <Navigator
         initialRoute={initialRoute}
@@ -64,7 +71,7 @@ var MyComponent = React.createClass({
       </Navigator>
     );
   }
-});
+}
 
 
 module.exports = MyComponent;

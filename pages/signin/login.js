@@ -10,40 +10,12 @@ import React, {
   TouchableOpacity,
 } from 'react-native';
 
+import ToolBar from '../../components/toolbar';
+
 let _navigator;
 
 const loginUrl = 'http://192.168.137.1:3000/login';
 
-class ToolBar extends Component{
-  constructor(props){
-    super(props);
-    this.state =  {
-      toolBar: {
-        title: '登录',
-      }
-    };
-  }
-
-  render() {
-    return (
-      <View style={{flexDirection: 'row',height:40,}}>
-      <View style={{width:60}}>
-      <Image source={require('../../res/imgs/backward.png')} style={{width:40,height:40,}}/>
-      </View>
-      <View style={{flex:1}}>
-      <ToolbarAndroid
-        title={this.state.toolBar.title}
-        titleColor='white'
-        onIconClicked={() => {console.log(_navigator); _navigator && _navigator.pop();}}
-        style={styles.toolbar}
-        contentInsetStart={12}
-      >
-      </ToolbarAndroid>
-      </View>
-      </View>
-    );
-  }
-}
 
 class LoginView extends Component{
   constructor(props){
@@ -140,10 +112,20 @@ class MyComponent extends Component{
 
   render() {
     _navigator = this.props.navigator;
-    console.log(_navigator);
+
     return (
       <View style={styles.container}>
-        <ToolBar />
+        <ToolBar
+        style = {styles.toolbar}
+        title={'登录'}
+        titleColor='white'
+        //logo={require('../../res/imgs/backward.png')}
+        navIcon={require('../../res/imgs/backward.png')}
+        onIconClicked={() => {console.log(_navigator); _navigator && _navigator.pop();}}
+        contentInsetStart = {12}
+        contentInsetEnd = {100}
+        >
+        </ToolBar>
         <LoginView />
       </View>
     );

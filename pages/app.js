@@ -66,8 +66,6 @@ var MyComponent = React.createClass({
       );
       break;
     }
-
-
   }
 });
 

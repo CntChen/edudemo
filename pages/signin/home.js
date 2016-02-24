@@ -2,12 +2,12 @@
  * by CntChen 2016.01.11
  */
 
-'use strict';
 
-var React = require('react-native');
-var Dimensions = require('Dimensions');
+import React from 'react-native';
+import Dimensions from'Dimensions';
 
 var {
+  Component,
   AppRegistry,
   StyleSheet,
   View,
@@ -17,11 +17,13 @@ var {
   Navigator,
 } = React;
 
-var _navigator;
+let _navigator;
 
-var MyComponent = React.createClass({
-  getInitialState: function(){
-    return {
+
+class MyComponent extends Component{
+  constructor(props){
+    super(props);
+    this.state = {
       register: {
         id : 'Register',
         text: '免费注册',
@@ -30,21 +32,21 @@ var MyComponent = React.createClass({
         id: 'Login',
         text: '登录',
       },
-    }
-  },
+    };
+  }
 
-  _onPressButton: function(targetId){
+  _onPressButton(targetId){
     _navigator && _navigator.push({id: targetId});
-  },
+  }
 
-  render: function() {
+  render() {
     _navigator = this.props.navigator;
     let {height, width} = Dimensions.get('window');
 
     return (
       <Image source={require('../../res/imgs/home.png')}
         resizeMode={Image.resizeMode.conver}
-        style={[styles.container, {width:width}]}>
+        style={[styles.background_image, {width:width,height:height}]}>
         <View style={styles.bottom}>
           <View style={styles.flex_row}>
             <TouchableOpacity onPress={() => this._onPressButton(this.state.register.id)} activeOpacity={stylesVariables.active_opacity} style={[styles.button, styles.btn_register]}>
@@ -60,13 +62,14 @@ var MyComponent = React.createClass({
       </Image>
     );
   }
-});
+}
 
 var styles = StyleSheet.create({
-  container: {
+  background_image: {
     flex: 1,
     justifyContent: 'flex-end',
   },
+
   flex_row:{
     flex: 1,
     flexDirection: 'row',
