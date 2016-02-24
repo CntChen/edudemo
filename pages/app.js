@@ -1,58 +1,70 @@
-'use strict';
+/**
+ * by CntChen 2016.02.24
+ */
 
-var React = require('react-native');
-var ScrollableTabView = require('react-native-scrollable-tab-view');
-
-var SignIn = require('./signin/index');
-
-var MentalityPage = require('./mentalitypage');
-var CollagePage = require('./collagepage');
-var PublicPage = require('./publicpage');
-var AboutMePage = require('./aboutmepage');
-
-var userState = 'unsignin';
-
-var {
+import React, {
   AppRegistry,
+  Component,
   StyleSheet,
+  BackAndroid,
   View,
-} = React;
+} from 'react-native';
+import ScrollableTabView from 'react-native-scrollable-tab-view';
 
-var MyComponent = React.createClass({
-  getInitialState: function(){
-    var data = [
-      {
-        title: '心理',
-        component: MentalityPage,
-      },
-      {
-        title: '高校',
-        component: CollagePage,
-      },
-      {
-        title: '公共区',
-        component: PublicPage,
-      },
-      {
-        title: '我的',
-        component: AboutMePage,
-      }
-    ];
+import SignIn from './signin/index';
 
-    return {
+import MentalityPage  from './mentalitypage';
+import CollagePage  from './collagepage';
+import PublicPage  from './publicpage';
+import AboutMePage  from './aboutmepage';
+
+let ExitFlag = 0;
+BackAndroid.addEventListener('hardwareBackPress', () => {
+  console.log('in app');
+
+
+  return true;
+});
+
+
+var styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#F5FCFF',
+  },
+});
+
+class MyComponent extends Component{
+  constructor(props){
+    super(props);
+
+    let userState = 'unsignin';
+
+    let data = [{
+      title: '心理',
+      component: MentalityPage,
+    }, {
+      title: '高校',
+      component: CollagePage,
+    }, {
+      title: '公共区',
+      component: PublicPage,
+    }, {
+      title: '我的',
+      component: AboutMePage,
+    }];
+    this.state = {
       tabItems: data,
       userState: userState,
-    }
-  },
+    };
+  }
 
-  render: function() {
+  render() {
     switch(this.state.userState)
     {
       case 'unsignin':
       return (
-        <View style={styles.container}>
           <SignIn />
-        </View>
       );
       break;
       case 'signined':
@@ -66,16 +78,8 @@ var MyComponent = React.createClass({
       );
       break;
     }
-
-
   }
-});
+}
 
-var styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F5FCFF',
-  },
-});
 
 module.exports = MyComponent;
