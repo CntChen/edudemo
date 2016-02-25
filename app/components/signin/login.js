@@ -10,7 +10,7 @@ import React, {
   TouchableOpacity,
 } from 'react-native';
 
-import ToolBar from '../../components/toolbar';
+import ToolBar from '../_common/toolbar';
 
 let _navigator;
 
