@@ -1,75 +1,16 @@
 'use strict';
 
-import React, {Component} from 'react-native';
-import ScrollableTabView from 'react-native-scrollable-tab-view';
-
-import SignIn from './signin/index';
-
-import MentalityPage from './mentalitypage';
-import CollagePage from './collagepage';
-import PublicPage from './publicpage';
-import AboutMePage from './aboutmepage';
-
-
-var {
-  AppRegistry,
+import React, {
+  Component,
   StyleSheet,
-  View,
-} = React;
+  Navigator,
+  BackAndroid,
+  View,} from 'react-native';
 
-class MyComponent extends  Component{
-  constructor(props) {
-    super(props);
+import Loading from './loading';
+import SignIn from './signin/index';
+import MainPage from './mainpage';
 
-    this.state = {
-      tabItems: [{
-        title: '心理',
-        component: MentalityPage,
-      }, {
-        title: '高校',
-        component: CollagePage,
-      }, {
-        title: '公共区',
-        component: PublicPage,
-      }, {
-        title: '我的',
-        component: AboutMePage,
-      }],
-    };
-  }
-
-  render() {
-    let {value, actions} = this.props;
-    console.log(value, actions);
-
-    switch(value.loginSuccess)
-    {
-      case false:
-      return (
-        <View style={styles.container}>
-          <SignIn />
-        </View>
-      );
-      break;
-      case true:
-      return (
-        <ScrollableTabView tabBarPosition='bottom'>
-          <MentalityPage tabLabel={this.state.tabItems[0].title} />
-          <CollagePage tabLabel={this.state.tabItems[1].title} />
-          <PublicPage tabLabel={this.state.tabItems[2].title} />
-          <AboutMePage tabLabel={this.state.tabItems[3].title} />
-        </ScrollableTabView>
-      );
-      break;
-      default:
-        return (
-        <View style={styles.container}>
-          <SignIn />
-        </View>
-      );
-    }
-  }
-}
 
 var styles = StyleSheet.create({
   container: {
@@ -78,10 +19,54 @@ var styles = StyleSheet.create({
   },
 });
 
+let initialRoute = {id: 'Loading'};
+let _navigator;
+let RouteMapper = function(route, navigationOperations) {
+  _navigator = navigationOperations;
 
-import { connect } from 'react-redux';
+  switch(route.id){
+    case 'Loading':
+      return (
+        <Loading navigator={navigationOperations}/>
+      );
+      break;
+    case 'SignIn':
+      return (
+        <SignIn navigator={navigationOperations} />
+      );
+      break;
+    case 'MainPage':
+      return (
+        <MainPage navigator={navigationOperations} />
+      );
+      break;
+    default:
+      return (
+        <Loading navigator={navigationOperations} />
+      );
+  }
 
-export default connect(state => ({
-    value: state.signin
-  })
-)(MyComponent);
+};
+
+class MyComponent extends  Component{
+  constructor(props) {
+    super(props);
+
+    this.state = {
+    };
+  }
+
+  render(){
+    return (
+      <Navigator
+        initialRoute={initialRoute}
+        configureScene={() => Navigator.SceneConfigs.FloatFromLeft}
+        renderScene={RouteMapper}
+      >
+      </Navigator>
+    );
+  }
+}
+
+
+export default MyComponent;
