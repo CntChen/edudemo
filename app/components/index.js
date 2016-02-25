@@ -1,75 +1,13 @@
 'use strict';
 
-import React, {Component} from 'react-native';
-import ScrollableTabView from 'react-native-scrollable-tab-view';
-
-import SignIn from './signin/index';
-
-import MentalityPage from './mentalitypage';
-import CollagePage from './collagepage';
-import PublicPage from './publicpage';
-import AboutMePage from './aboutmepage';
-
-
-var {
-  AppRegistry,
+import React, {
+  Component,
   StyleSheet,
-  View,
-} = React;
+  Navigator,
+  BackAndroid,
+  View,} from 'react-native';
 
-class MyComponent extends  Component{
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      tabItems: [{
-        title: '心理',
-        component: MentalityPage,
-      }, {
-        title: '高校',
-        component: CollagePage,
-      }, {
-        title: '公共区',
-        component: PublicPage,
-      }, {
-        title: '我的',
-        component: AboutMePage,
-      }],
-    };
-  }
-
-  render() {
-    let {value, actions} = this.props;
-    console.log(value, actions);
-
-    switch(value.loginSuccess)
-    {
-      case false:
-      return (
-        <View style={styles.container}>
-          <SignIn />
-        </View>
-      );
-      break;
-      case true:
-      return (
-        <ScrollableTabView tabBarPosition='bottom'>
-          <MentalityPage tabLabel={this.state.tabItems[0].title} />
-          <CollagePage tabLabel={this.state.tabItems[1].title} />
-          <PublicPage tabLabel={this.state.tabItems[2].title} />
-          <AboutMePage tabLabel={this.state.tabItems[3].title} />
-        </ScrollableTabView>
-      );
-      break;
-      default:
-        return (
-        <View style={styles.container}>
-          <SignIn />
-        </View>
-      );
-    }
-  }
-}
+import Loading from './loading';
 
 var styles = StyleSheet.create({
   container: {
@@ -79,9 +17,53 @@ var styles = StyleSheet.create({
 });
 
 
-import { connect } from 'react-redux';
+let ExitFlag = 0;
+BackAndroid.addEventListener('hardwareBackPress', () => {
+  console.log('in signin');
+  if (_navigator && _navigator.getCurrentRoutes().length > 1) {
+    _navigator.pop();
+    ExitFlag = 0;
+    return true;
+  }
 
-export default connect(state => ({
-    value: state.signin
-  })
-)(MyComponent);
+  ExitFlag++;
+  if (ExitFlag >= 2) {
+    return false;
+  };
+
+  return true;
+});
+
+let initialRoute = {name: 'Loading', component: Loading};
+let _navigator;
+let RouteMapper = function(route, navigationOperations) {
+  _navigator = navigationOperations;
+
+  let Component = route.component;
+  if(Component) {
+    return <Component {...route.params} navigator={_navigator} />
+  }
+};
+
+class MyComponent extends Component{
+  constructor(props) {
+    super(props);
+
+    this.state = {
+    };
+  }
+
+  render(){
+    return (
+      <Navigator
+        initialRoute={initialRoute}
+        configureScene={() => Navigator.SceneConfigs.FloatFromLeft}
+        renderScene={RouteMapper}
+      >
+      </Navigator>
+    );
+  }
+}
+
+
+export default MyComponent;
