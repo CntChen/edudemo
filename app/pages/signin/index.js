@@ -66,7 +66,7 @@ class MyComponent extends Component{
     return (
       <Navigator
         initialRoute={initialRoute}
-        configureScene={() => Navigator.SceneConfigs.FadeAndroid}
+        configureScene={() => Navigator.SceneConfigs.FloatFromLeft}
         renderScene={RouteMapper}
       >
       </Navigator>

@@ -4,12 +4,12 @@
  */
 'use strict';
 
-var React = require('react-native');
-var App = require('./pages/app');
+import React from 'react-native';
+import Root  from './app/containers/root';
 
 var {
   AppRegistry,
 } = React;
 
 
-AppRegistry.registerComponent('EduDemo', () => App);
+AppRegistry.registerComponent('EduDemo', () => Root);

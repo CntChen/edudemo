@@ -9,6 +9,8 @@
     "koa": "^1.1.2",
     "koa-router": "^5.4.0",
     "react-native": "^0.20.0",
-    "react-native-scrollable-tab-view": "^0.3.4"
+    "react-native-scrollable-tab-view": "^0.3.4",
+    "react-redux": "^4.4.0",
+    "redux": "^3.3.1"
   }
 }
