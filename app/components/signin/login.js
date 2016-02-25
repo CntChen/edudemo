@@ -17,6 +17,54 @@ let _navigator;
 const loginUrl = 'http://192.168.137.1:3000/login';
 
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#F5FCFF',
+  },
+  toolbar: {
+    backgroundColor: '#D4D4D4',
+    height: 40,
+  },
+  login_view:{
+    flex: 1,
+  },
+  login_info: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 16,
+    marginLeft: 12,
+    marginRight: 12,
+  },
+  texthint: {
+    flex: 1,
+    fontSize: 16,
+  },
+  textinput: {
+    paddingLeft: 10,
+    flex: 5,
+    height: 40,
+    backgroundColor: '#FF0000',
+  },
+  button:{
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 5,
+    height: 40,
+  },
+  btn_submit: {
+    flex: 1,
+    backgroundColor: '#00FF00',
+  },
+  submit_text:{
+    fontSize:16,
+  },
+});
+
+const stylesVariables = {
+  active_opacity: 0.8,
+};
+
 class LoginView extends Component{
   constructor(props){
     super(props);
@@ -42,7 +90,8 @@ class LoginView extends Component{
     switch(targetId)
     {
       case 'Submit':
-        console.log(this.state);
+      console.log(this.props.loginIn);
+        this.props.loginIn();
         fetch(loginUrl, {
           method: 'POST',
           headers: {
@@ -113,6 +162,8 @@ class MyComponent extends Component{
   render() {
     _navigator = this.props.navigator;
 
+    let {actions} = this.props;
+
     return (
       <View style={styles.container}>
         <ToolBar
@@ -126,58 +177,46 @@ class MyComponent extends Component{
         contentInsetEnd = {100}
         >
         </ToolBar>
-        <LoginView />
+        <LoginView loginIn={actions.loginIn}/>
       </View>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F5FCFF',
-  },
-  toolbar: {
-    backgroundColor: '#D4D4D4',
-    height: 40,
-  },
-  login_view:{
-    flex: 1,
-  },
-  login_info: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 16,
-    marginLeft: 12,
-    marginRight: 12,
-  },
-  texthint: {
-    flex: 1,
-    fontSize: 16,
-  },
-  textinput: {
-    paddingLeft: 10,
-    flex: 5,
-    height: 40,
-    backgroundColor: '#FF0000',
-  },
-  button:{
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 5,
-    height: 40,
-  },
-  btn_submit: {
-    flex: 1,
-    backgroundColor: '#00FF00',
-  },
-  submit_text:{
-    fontSize:16,
-  },
-});
 
-const stylesVariables = {
-  active_opacity: 0.8,
-};
+// import { bindActionCreators } from 'redux';
+// import * as signinActions from '../../actions/signinactions';
+// import { connect } from 'react-redux';
 
-module.exports = MyComponent;
+//  export default connect(state => ({
+//     state: state
+//   }),
+//   (dispatch) => ({
+//     actions: bindActionCreators(signinActions, dispatch)
+//   })
+// )(MyComponent);
+
+import {bindActionCreators} from 'redux';
+import * as counterActions from '../../actions/signinactions';
+import { connect } from 'react-redux';
+
+export default connect(state => ({
+  }),
+  (dispatch) => ({
+    actions: bindActionCreators(counterActions, dispatch)
+  })
+)(MyComponent);
+
+
+// import {bindActionCreators} from 'redux';
+// import * as counterActions from '../../actions/counteractions';
+// import { connect } from 'react-redux';
+
+// export default connect(state => ({
+//   }),
+//   (dispatch) => ({
+//     actions: bindActionCreators(counterActions, dispatch)
+//   })
+// )(MyComponent);
+
+

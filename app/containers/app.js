@@ -1,12 +1,12 @@
 
 import React, { Component } from 'react-native';
-import {bindActionCreators} from 'redux';
 import Counter from '../components/counter';
+import {bindActionCreators} from 'redux';
 import * as counterActions from '../actions/counteractions';
 import { connect } from 'react-redux';
 
 
-class CounterApp extends Component {
+class App extends Component {
   constructor(props) {
     super(props);
   }
@@ -16,8 +16,7 @@ class CounterApp extends Component {
 
     return (
       <Counter
-        counter={state}
-        {...actions} />
+        counter={state} increment = {actions.increment} decrement={actions.decrement} />
     );
   }
 }
@@ -28,4 +27,4 @@ export default connect(state => ({
   (dispatch) => ({
     actions: bindActionCreators(counterActions, dispatch)
   })
-)(CounterApp);
+)(App);

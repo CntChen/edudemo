@@ -2,11 +2,7 @@
  * by CntChen 2016.01.11
  */
 
-
-import React from 'react-native';
-import Dimensions from'Dimensions';
-
-var {
+import React, {
   Component,
   AppRegistry,
   StyleSheet,
@@ -15,11 +11,53 @@ var {
   Text,
   TouchableOpacity,
   Navigator,
-} = React;
+} from 'react-native';
+import Dimensions from'Dimensions';
+
+
+let styles = StyleSheet.create({
+  background_image: {
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
+
+  flex_row:{
+    flex: 1,
+    flexDirection: 'row',
+  },
+  flex_float_right:{
+    justifyContent: 'flex-end',
+  },
+  bottom: {
+    flexDirection: 'row',
+    height: 60,
+  },
+  button:{
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius:5,
+    width: 100,
+    marginTop: 10,
+    height: 40,
+  },
+  btn_register: {
+    backgroundColor: '#555555',
+    marginLeft: 20,
+  },
+  btn_login: {
+    backgroundColor: '#CCCCCC',
+    marginRight: 20,
+  },
+  text: {
+    fontSize: 16,
+  },
+});
+
+var stylesVariables = {
+  active_opacity: 0.8,
+};
 
 let _navigator;
-
-
 class MyComponent extends Component{
   constructor(props){
     super(props);
@@ -64,46 +102,5 @@ class MyComponent extends Component{
   }
 }
 
-var styles = StyleSheet.create({
-  background_image: {
-    flex: 1,
-    justifyContent: 'flex-end',
-  },
 
-  flex_row:{
-    flex: 1,
-    flexDirection: 'row',
-  },
-  flex_float_right:{
-    justifyContent: 'flex-end',
-  },
-  bottom: {
-    flexDirection: 'row',
-    height: 60,
-  },
-  button:{
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius:5,
-    width: 100,
-    marginTop: 10,
-    height: 40,
-  },
-  btn_register: {
-    backgroundColor: '#555555',
-    marginLeft: 20,
-  },
-  btn_login: {
-    backgroundColor: '#CCCCCC',
-    marginRight: 20,
-  },
-  text: {
-    fontSize: 16,
-  },
-});
-
-var stylesVariables = {
-  active_opacity: 0.8,
-};
-
-module.exports = MyComponent;
+export default MyComponent;

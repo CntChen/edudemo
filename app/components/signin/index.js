@@ -11,7 +11,7 @@ import Home from './home';
 import Register from './register';
 import Login from './login';
 
-let _navigator;
+
 let ExitFlag = 0;
 BackAndroid.addEventListener('hardwareBackPress', () => {
   console.log('in signin');
@@ -29,8 +29,9 @@ BackAndroid.addEventListener('hardwareBackPress', () => {
   return true;
 });
 
-var initialRoute = {id: 'Home'};
-var RouteMapper = function(route, navigationOperations) {
+let initialRoute = {id: 'Home'};
+let _navigator;
+let RouteMapper = function(route, navigationOperations) {
   _navigator = navigationOperations;
 
     if(route.id === 'Home'){
@@ -55,7 +56,6 @@ var RouteMapper = function(route, navigationOperations) {
     }
 };
 
-
 class MyComponent extends Component{
   constructor(props){
     super(props);
@@ -74,5 +74,4 @@ class MyComponent extends Component{
   }
 }
 
-
-module.exports = MyComponent;
+export default MyComponent;
