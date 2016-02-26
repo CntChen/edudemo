@@ -1,25 +1,28 @@
+/**
+ * by CntChen 2016.02.26
+ */
+
+'use strict';
+
 import * as types from './actiontypes';
 
-export function loginIn() {
+
+export function setLoginStateToHasLogin(userName) {
   return {
-    type: types.LOGIN_IN
+    type: types.SET_LOGIN_STATE_TO_HAS_LOGIN,
+    userName: userName,
   };
 }
 
-export function loginOut(username, password) {
+export function setLoginStateToHasLogout(userName) {
   return {
-    type: types.LOGIN_OUT
+    type: types.SET_LOGIN_STATE_TO_HAS_LOGOUT,
+    userName: userName,
   };
 }
 
-export function register() {
+export function setLoginStateToRegister() {
   return {
-    type: types.REGISTER
-  };
-}
-
-export function findPassword() {
-  return {
-    type: types.FINDPASSWORD
+    type: types.SET_LOGIN_STATE_TO_REGISTER,
   };
 }

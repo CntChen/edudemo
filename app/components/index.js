@@ -1,3 +1,7 @@
+/**
+ * by CntChen 2016.02.26
+ */
+
 'use strict';
 
 import React, {
@@ -8,9 +12,6 @@ import React, {
   View,} from 'react-native';
 
 import Loading from './loading';
-import SignIn from './signin/index';
-import MainPage from './mainpage';
-
 
 var styles = StyleSheet.create({
   container: {
@@ -19,36 +20,34 @@ var styles = StyleSheet.create({
   },
 });
 
-let initialRoute = {id: 'Loading'};
+let ExitFlag = 0;
+BackAndroid.addEventListener('hardwareBackPress', () => {
+  if (_navigator && _navigator.getCurrentRoutes().length > 1) {
+    _navigator.pop();
+    ExitFlag = 0;
+    return true;
+  }
+
+  ExitFlag++;
+  if (ExitFlag >= 2) {
+    return false;
+  };
+
+  return true;
+});
+
+let initialRoute = {name: 'Loading', component: Loading};
 let _navigator;
 let RouteMapper = function(route, navigationOperations) {
   _navigator = navigationOperations;
 
-  switch(route.id){
-    case 'Loading':
-      return (
-        <Loading navigator={navigationOperations}/>
-      );
-      break;
-    case 'SignIn':
-      return (
-        <SignIn navigator={navigationOperations} />
-      );
-      break;
-    case 'MainPage':
-      return (
-        <MainPage navigator={navigationOperations} />
-      );
-      break;
-    default:
-      return (
-        <Loading navigator={navigationOperations} />
-      );
+  let Component = route.component;
+  if(Component) {
+    return <Component {...route.params} navigator={_navigator} />
   }
-
 };
 
-class MyComponent extends  Component{
+class MyComponent extends Component{
   constructor(props) {
     super(props);
 
@@ -67,6 +66,5 @@ class MyComponent extends  Component{
     );
   }
 }
-
 
 export default MyComponent;

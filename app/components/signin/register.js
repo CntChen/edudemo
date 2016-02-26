@@ -1,3 +1,7 @@
+/**
+ * by CntChen 2016.02.26
+ */
+
 'use strict';
 
 var React = require('react-native');

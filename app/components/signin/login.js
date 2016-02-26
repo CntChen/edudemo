@@ -1,3 +1,9 @@
+/**
+ * by CntChen 2016.02.26
+ */
+ 
+'use strict';
+
 import React, {
   AppRegistry,
   Component,
@@ -9,13 +15,11 @@ import React, {
   Text,
   TouchableOpacity,
 } from 'react-native';
-
 import ToolBar from '../_common/toolbar';
 
-let _navigator;
+import MainPage from '../mainpage';
 
-const loginUrl = 'http://192.168.137.1:3000/login';
-
+import {LOGIN_URL} from '../../constants/urls';
 
 const styles = StyleSheet.create({
   container: {
@@ -90,9 +94,8 @@ class LoginView extends Component{
     switch(targetId)
     {
       case 'Submit':
-      console.log(this.props.loginIn);
-        this.props.loginIn();
-        fetch(loginUrl, {
+        let {setLoginStateToHasLogin, loginSuccessCal} = this.props;
+        fetch(LOGIN_URL, {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
@@ -107,7 +110,9 @@ class LoginView extends Component{
         .then((responseText) => JSON.parse(responseText))
         .then(function(responseJson){
           console.log(responseJson);
-          console.log('loginsuccess');})
+          setLoginStateToHasLogin('CntChen');
+          loginSuccessCal();
+        })
         .catch((error) => {
           console.warn(error);
         });
@@ -157,10 +162,15 @@ class MyComponent extends Component{
     super(props);
     this.state = {
     };
+    this._navigator;
+  }
+
+  loginSuccessCal(){
+    this._navigator && this._navigator.resetTo({name: 'MainPage', component: MainPage});
   }
 
   render() {
-    _navigator = this.props.navigator;
+    this._navigator = this.props.navigator;
 
     let {actions} = this.props;
 
@@ -172,51 +182,28 @@ class MyComponent extends Component{
         titleColor='white'
         //logo={require('../../res/imgs/backward.png')}
         navIcon={require('../../res/imgs/backward.png')}
-        onIconClicked={() => {console.log(_navigator); _navigator && _navigator.pop();}}
+        onIconClicked={() => {this._navigator && this._navigator.pop();}}
         contentInsetStart = {12}
         contentInsetEnd = {100}
         >
         </ToolBar>
-        <LoginView loginIn={actions.loginIn}/>
+        <LoginView {...actions} loginSuccessCal={this.loginSuccessCal.bind(this)}/>
       </View>
     );
   }
 }
 
 
-// import { bindActionCreators } from 'redux';
-// import * as signinActions from '../../actions/signinactions';
-// import { connect } from 'react-redux';
-
-//  export default connect(state => ({
-//     state: state
-//   }),
-//   (dispatch) => ({
-//     actions: bindActionCreators(signinActions, dispatch)
-//   })
-// )(MyComponent);
-
 import {bindActionCreators} from 'redux';
-import * as counterActions from '../../actions/signinactions';
+import * as signinActions from '../../actions/signinactions';
 import { connect } from 'react-redux';
 
-export default connect(state => ({
+export default connect(
+  state => ({
   }),
   (dispatch) => ({
-    actions: bindActionCreators(counterActions, dispatch)
+    actions: bindActionCreators(signinActions, dispatch)
   })
 )(MyComponent);
-
-
-// import {bindActionCreators} from 'redux';
-// import * as counterActions from '../../actions/counteractions';
-// import { connect } from 'react-redux';
-
-// export default connect(state => ({
-//   }),
-//   (dispatch) => ({
-//     actions: bindActionCreators(counterActions, dispatch)
-//   })
-// )(MyComponent);
 
 
