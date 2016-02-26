@@ -2,6 +2,8 @@
  * by CntChen 2016.01.11
  */
 
+'use strict';
+
 import React, {
   Component,
   AppRegistry,

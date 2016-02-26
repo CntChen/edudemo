@@ -1,6 +1,7 @@
 /**
  * by CntChen 2016.02.26
  */
+
 'use strict';
 
 import React, {
@@ -23,11 +24,11 @@ let styles = StyleSheet.create({
 
 
 let _navigator;
+let _actions;
 class MyComponent extends Component{
   constructor(props){
     super(props);
     this.state = {
-      loginState: '',
     };
   }
 
@@ -37,27 +38,31 @@ class MyComponent extends Component{
     // if use don't login, goto signin
     // if get user name goto login page
     setTimeout(() => {
-      let loginState = 'REGISTER';// HAS_LOGIN HAS_LOGOUT REGISTER
-      let targetId = '';
-      switch(loginState){
-        case 'HAS_LOGIN':
-          targetId = 'MainPage';
-          break;
-        case 'HAS_LOGOUT':
-        case 'REGISTER':
-          targetId = 'SignIn';
-          break;
-        default:
-          targetId = 'SignIn';
-      }
-      _navigator && _navigator.push({name: targetId, component: SignIn});
+      console.log(_actions && _actions.SET_LOGIN_STATE_TO_HAS_LOGIN('CntChen'));
     }, 2000);
+  }
+
+  componentWillReceiveProps(nextProps){
+    let { value } = nextProps;
+
+    switch (value.loginState) {
+      case 'HAS_LOGIN':
+        _navigator && _navigator.push({name: 'MainPage', component: MainPage});
+        break;
+      case 'HAS_LOGOUT':
+      case 'REGISTER':
+        _navigator && _navigator.push({name: 'SignIn', component: SignIn});
+        break;
+      default:
+        _navigator && _navigator.push({name: 'SignIn', component: SignIn});
+    }
   }
 
   render() {
     _navigator = this.props.navigator;
-    let {height, width} = Dimensions.get('window');
+    _actions = this.props.actions;
 
+    let {height, width} = Dimensions.get('window');
     return (
       <Image source={require('../res/imgs/loading.png')}
         resizeMode={Image.resizeMode.conver}
@@ -69,7 +74,12 @@ class MyComponent extends Component{
 
 
 import { connect } from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as signinActions from '../actions/signinactions';
 export default connect(state => ({
     value: state.signin
+  }),
+  (dispatch) => ({
+    actions: bindActionCreators(signinActions, dispatch)
   })
 )(MyComponent);

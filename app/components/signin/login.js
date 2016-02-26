@@ -1,3 +1,9 @@
+/**
+ * by CntChen 2016.02.26
+ */
+ 
+'use strict';
+
 import React, {
   AppRegistry,
   Component,
@@ -184,39 +190,15 @@ class MyComponent extends Component{
 }
 
 
-// import { bindActionCreators } from 'redux';
-// import * as signinActions from '../../actions/signinactions';
-// import { connect } from 'react-redux';
-
-//  export default connect(state => ({
-//     state: state
-//   }),
-//   (dispatch) => ({
-//     actions: bindActionCreators(signinActions, dispatch)
-//   })
-// )(MyComponent);
-
 import {bindActionCreators} from 'redux';
-import * as counterActions from '../../actions/signinactions';
+import * as signinActions from '../../actions/signinactions';
 import { connect } from 'react-redux';
 
 export default connect(state => ({
   }),
   (dispatch) => ({
-    actions: bindActionCreators(counterActions, dispatch)
+    actions: bindActionCreators(signinActions, dispatch)
   })
 )(MyComponent);
-
-
-// import {bindActionCreators} from 'redux';
-// import * as counterActions from '../../actions/counteractions';
-// import { connect } from 'react-redux';
-
-// export default connect(state => ({
-//   }),
-//   (dispatch) => ({
-//     actions: bindActionCreators(counterActions, dispatch)
-//   })
-// )(MyComponent);
 
 

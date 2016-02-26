@@ -1,6 +1,8 @@
 /**
  * by CntChen 2016.02.24
  */
+ 
+'use strict';
 
 import React, {
   Component,

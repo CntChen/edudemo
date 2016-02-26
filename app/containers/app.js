@@ -1,10 +1,12 @@
+/**
+ * by CntChen 2016.02.26
+ * redux计数器demo
+ */
+
+'use strict';
 
 import React, { Component } from 'react-native';
 import Counter from '../components/counter';
-import {bindActionCreators} from 'redux';
-import * as counterActions from '../actions/counteractions';
-import { connect } from 'react-redux';
-
 
 class App extends Component {
   constructor(props) {
@@ -21,6 +23,10 @@ class App extends Component {
   }
 }
 
+
+import {bindActionCreators} from 'redux';
+import * as counterActions from '../actions/counteractions';
+import { connect } from 'react-redux';
 export default connect(state => ({
     state: state.counter
   }),

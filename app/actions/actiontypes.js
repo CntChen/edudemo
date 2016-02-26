@@ -1,3 +1,7 @@
+/**
+ * by CntChen 2016.02.26
+ */
+
 export const INCREMENT = 'INCREMENT';
 export const DECREMENT = 'DECREMENT';
 
@@ -5,3 +9,10 @@ export const LOGIN_IN = 'LOGIN_IN';
 export const LOGIN_OUT = 'LOGIN_OUT';
 export const REGISTER = 'REGISTER';
 export const FINDPASSWORD = 'FINDPASSWORD';
+
+
+
+
+export const SET_LOGIN_STATE_TO_HAS_LOGIN = 'SET_LOGIN_STATE_TO_HAS_LOGIN';
+export const SET_LOGIN_STATE_TO_HAS_LOGOUT = 'SET_LOGIN_STATE_TO_HAS_LOGOUT';
+export const SET_LOGIN_STATE_TO_REGISTER = 'SET_LOGIN_STATE_TO_REGISTER';
