@@ -23,7 +23,6 @@ var styles = StyleSheet.create({
 
 let ExitFlag = 0;
 BackAndroid.addEventListener('hardwareBackPress', () => {
-  console.log('in signin');
   if (_navigator && _navigator.getCurrentRoutes().length > 1) {
     _navigator.pop();
     ExitFlag = 0;

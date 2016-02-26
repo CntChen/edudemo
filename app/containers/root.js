@@ -16,11 +16,8 @@ let initialState = {
   counter: 10,
   signin:{
     loginState: '',
+    userName: '',
     loginSuccess: false,
-    userInfo:{
-      userName: '',
-      password: '',
-    },
   },
 };
 

@@ -23,13 +23,15 @@ let styles = StyleSheet.create({
 });
 
 
-let _navigator;
-let _actions;
+
 class MyComponent extends Component{
   constructor(props){
     super(props);
     this.state = {
     };
+
+    this._navigator;
+    this._actions;
   }
 
   componentDidMount(){
@@ -38,29 +40,35 @@ class MyComponent extends Component{
     // if use don't login, goto signin
     // if get user name goto login page
     setTimeout(() => {
-      console.log(_actions && _actions.SET_LOGIN_STATE_TO_HAS_LOGIN('CntChen'));
-    }, 2000);
+      let userName = 'CntChen';
+      // this._actions && this._actions.setLoginStateToHasLogin(userName);
+      this._actions && this._actions.setLoginStateToHasLogout(userName);
+    }, 1000);
+  }
+
+  componentWillUnmount(){
+    console.log('componentWillUnmount');
   }
 
   componentWillReceiveProps(nextProps){
-    let { value } = nextProps;
+    let loginState = nextProps.value;
 
-    switch (value.loginState) {
+    switch (loginState) {
       case 'HAS_LOGIN':
-        _navigator && _navigator.push({name: 'MainPage', component: MainPage});
+        this._navigator && this._navigator.resetTo({name: 'MainPage', component: MainPage});
         break;
       case 'HAS_LOGOUT':
       case 'REGISTER':
-        _navigator && _navigator.push({name: 'SignIn', component: SignIn});
+        this._navigator && this._navigator.resetTo({name: 'SignIn', component: SignIn});
         break;
       default:
-        _navigator && _navigator.push({name: 'SignIn', component: SignIn});
+        this._navigator && this._navigator.resetTo({name: 'SignIn', component: SignIn});
     }
   }
 
   render() {
-    _navigator = this.props.navigator;
-    _actions = this.props.actions;
+    this._navigator = this.props.navigator;
+    this._actions = this.props.actions;
 
     let {height, width} = Dimensions.get('window');
     return (
@@ -77,7 +85,7 @@ import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as signinActions from '../actions/signinactions';
 export default connect(state => ({
-    value: state.signin
+    value: state.signin.loginState
   }),
   (dispatch) => ({
     actions: bindActionCreators(signinActions, dispatch)
