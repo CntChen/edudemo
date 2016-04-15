@@ -35,19 +35,31 @@ class MyComponent extends Component{
         component: AboutMePage,
       }],
     };
+
+    this._navigator;
+  }
+
+  componentDidMount(){
+    console.log('componentDidMount');
+  }
+
+  componentWillUpdate(){
+    console.log('componentWillUpdate');
   }
 
   render() {
-      return (
-        <ScrollableTabView tabBarPosition='bottom'>
-          <MentalityPage tabLabel={this.state.tabItems[0].title} />
-          <CollagePage tabLabel={this.state.tabItems[1].title} />
-          <PublicPage tabLabel={this.state.tabItems[2].title} />
-          <AboutMePage tabLabel={this.state.tabItems[3].title} />
-        </ScrollableTabView>
-      );
-    }
+    this._navigator = this.props.navigator;
+
+    return (
+      <ScrollableTabView tabBarPosition='bottom'>
+        <MentalityPage tabLabel={this.state.tabItems[0].title} />
+        <CollagePage tabLabel={this.state.tabItems[1].title} />
+        <PublicPage tabLabel={this.state.tabItems[2].title} />
+        <AboutMePage tabLabel={this.state.tabItems[3].title} />
+      </ScrollableTabView>
+    );
   }
+}
 
 var styles = StyleSheet.create({
   container: {

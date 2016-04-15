@@ -59,7 +59,7 @@ class MyComponent extends Component{
     return (
       <Navigator
         initialRoute={initialRoute}
-        configureScene={() => Navigator.SceneConfigs.FloatFromLeft}
+        // configureScene={() => Navigator.SceneConfigs.FloatFromLeft}
         renderScene={RouteMapper}
       >
       </Navigator>

@@ -18,6 +18,8 @@ import React, {
 import ToolBar from '../_common/toolbar';
 
 import MainPage from '../mainpage';
+import Loading from '../loading';
+
 
 import {LOGIN_URL} from '../../constants/urls';
 
